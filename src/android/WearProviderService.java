@@ -11,27 +11,31 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 
 public class WearProviderService extends Service implements
         MessageApi.MessageListener,
-        NodeApi.NodeListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener
+
+{
 
     public static final String MESSAGE_RECEIVED_PATH = "net.trentgardner.cordova.androidwear.NewMessage";
 
     private final List<WearMessageListener> listeners = new ArrayList<WearMessageListener>();
     private final List<String> nodes = new ArrayList<String>();
 
-    private static final String TAG = WearProviderService.class.getSimpleName();
+    private static final String TAG = "WearProviderService";
 
     private GoogleApiClient mGoogleApiClient;
     private Thread mBackgroundThread;
@@ -110,7 +114,6 @@ public class WearProviderService extends Service implements
 
         if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
             Wearable.MessageApi.removeListener(mGoogleApiClient, this);
-            Wearable.NodeApi.removeListener(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
 
@@ -220,19 +223,36 @@ public class WearProviderService extends Service implements
         }
 
         Wearable.MessageApi.addListener(mGoogleApiClient, this);
-        Wearable.NodeApi.addListener(mGoogleApiClient, this);
 
         mBackgroundHandler.post(new Runnable() {
             @Override
             public void run() {
-                NodeApi.GetConnectedNodesResult nodes =
-                        Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).await();
-                for (Node node : nodes.getNodes()) {
-                    addNode(node.getId());
-                }
-            }
+                getNodes();            }
         });
     }
+
+    private void  getNodes() {
+        Task<List<Node>> nodeListTask =
+                Wearable.getNodeClient(getApplicationContext()).getConnectedNodes();
+
+        try {
+            // Block on a task and get the result synchronously (because this is on a background
+            // thread).
+            List<Node> nodes = Tasks.await(nodeListTask);
+
+            for (Node node : nodes) {
+                addNode(node.getId());
+            }
+
+        } catch (ExecutionException exception) {
+            Log.e(TAG, "Task failed: " + exception);
+
+        } catch (InterruptedException exception) {
+            Log.e(TAG, "Interrupt occurred: " + exception);
+        }
+
+    }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -254,24 +274,13 @@ public class WearProviderService extends Service implements
         Wearable.MessageApi.removeListener(mGoogleApiClient, this);
     }
 
-    @Override
-    public void onPeerConnected(final Node node) {
-        LOGD(TAG, "onPeerConnected");
-        addNode(node.getId());
-    }
-
-    @Override
-    public void onPeerDisconnected(final Node node) {
-        LOGD(TAG, "onPeerDisconnected");
-        removeNode(node.getId());
-    }
 
     /**
      * As simple wrapper around Log.d
      */
     private static void LOGD(final String tag, String message) {
         //if (Log.isLoggable(tag, Log.DEBUG)) {
-            Log.d(tag, message);
+        Log.d(tag, message);
         //}
     }
 }
