@@ -3,6 +3,10 @@
 
 The plugin has functions that allows your app to have bidirectional communication with Android Wear Smartwatch applications and Cordova applications.
 
+## Now works with Google Play Services v11.8.0
+Updated on Jan 04 2018 for use with the latest version of Google Play Services (v11.8.0).
+Unfortunately NodeApi has been deprecated (MessageApi as well, but it only gives a warning), so I had to change the code myself. Later I might modify the code again when a newer version of Google Play Services is released.
+
 ## Installation
 With Cordova CLI, from npm:
 ```
