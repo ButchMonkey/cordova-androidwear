@@ -31,3 +31,14 @@ cordova plugin add https://github.com/ragcsalo/cordova-androidwear
       AndroidWear.sendData(e.handle, "Hello From Cordova!");
   });
   ```
+  
+## Notes
+
+Please note with the introduction of Play Services 11.8.0, there's been a breaking change, requiring you to specify a capability in your wearable project of `cordova_messaging`. This is required for connect / disconnect sensitivity.
+  ```xml
+  <resources>
+	  <string-array name="android_wear_capabilities" translatable="false">
+		  <item>cordova_messaging</item>
+	  </string-array>
+  </resources>
+  ```
