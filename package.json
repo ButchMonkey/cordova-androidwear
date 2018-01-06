@@ -1,47 +1,17 @@
 {
-  "_from": "git+https://github.com/tgardner/cordova-androidwear.git",
-  "_id": "cordova-androidwear@1.0.0",
-  "_inBundle": false,
-  "_integrity": "sha1-gWd5/Sxt7XXvo0XQaw40tEz9oNw=",
-  "_location": "/cordova-androidwear",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "git",
-    "raw": "https://github.com/tgardner/cordova-androidwear",
-    "rawSpec": "https://github.com/tgardner/cordova-androidwear",
-    "saveSpec": "git+https://github.com/tgardner/cordova-androidwear.git",
-    "fetchSpec": "https://github.com/tgardner/cordova-androidwear.git",
-    "gitCommittish": "master"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "git+https://github.com/tgardner/cordova-androidwear.git#82a7238dcc82f1f19578681ea8aa7e7c859bbc52",
-  "_spec": "https://github.com/tgardner/cordova-androidwear",
-  "_where": "C:\\Android\\Apps\\2017\\mental_painter_pro",
-  "author": {
-    "name": "Trent Gardner"
-  },
-  "bugs": {
-    "url": "https://github.com/tgardner/cordova-androidwear/issues"
-  },
-  "bundleDependencies": false,
+  "name": "cordova-androidwear",
+  "version": "1.0.1",
+  "description": "Communication from your cordova application to an Android Wear application.",
   "cordova": {
     "id": "cordova-androidwear",
     "platforms": [
       "android"
     ]
   },
-  "deprecated": false,
-  "description": "Communication from your cordova application to an Android Wear application.",
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=3.0.0"
-    }
-  ],
-  "homepage": "https://github.com/tgardner/cordova-androidwear#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgardner/cordova-androidwear.git"
+  },
   "keywords": [
     "AndroidWear",
     "Android",
@@ -51,11 +21,16 @@
     "ecosystem:cordova",
     "cordova-android"
   ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Trent Gardner",
   "license": "Apache 2.0",
-  "name": "cordova-androidwear",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tgardner/cordova-androidwear.git"
+  "bugs": {
+    "url": "https://github.com/tgardner/cordova-androidwear/issues"
   },
-  "version": "1.0.0"
+  "homepage": "https://github.com/tgardner/cordova-androidwear#readme"
 }
