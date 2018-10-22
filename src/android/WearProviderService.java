@@ -30,7 +30,7 @@ public class WearProviderService extends Service implements
 
 {
 
-    public static final String MESSAGE_RECEIVED_PATH = "net.trentgardner.cordova.androidwear.NewMessage";
+    public static final String MESSAGE_RECEIVED_PATH = "/NewMessage";
 
     private final List<WearMessageListener> listeners = new ArrayList<WearMessageListener>();
     private final List<String> nodes = new ArrayList<String>();
